@@ -1,0 +1,6 @@
+cartopy
+numpy
+matplotlib
+
+aprspy
+bitstring
