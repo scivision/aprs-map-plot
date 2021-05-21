@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-basic demo of reading APRS packets and plotting on a map
+basic demo of reading APRS packets and plotting on a map.
 
-pip install bitstring
+Python >= 3.9
 
 example supposing you have APRS packets from aprs.fi in aprs_raw.txt,
 and wish to plot over continential USA:
 
-    python demo.py aprs_raw.txt -b 20 50 -130 -65 -t 25
+    python aprs_map.py aprs_raw.txt -b 20 50 -130 -65 -t 25
 """
 
 import argparse
@@ -66,6 +66,16 @@ def map_plot(latlon: list[tuple[float, float]]):
     ax.add_feature(cpf.OCEAN)
     ax.add_feature(cpf.COASTLINE)
     ax.add_feature(cpf.BORDERS, linestyle=":")
+    ax.add_feature(cpf.LAKES, alpha=0.5)
+
+    state_prov = cpf.NaturalEarthFeature(
+        category="cultural",
+        name="admin_1_states_provinces_lines",
+        scale="110m",
+        edgecolor="gray",
+        facecolor="none",
+    )
+    ax.add_feature(state_prov)
 
     ax.scatter(ll[:, 1], ll[:, 0], transform=proj)
 
